@@ -1,6 +1,9 @@
-from pathlib import Path
 import shutil
 import hashlib
+import logging
+from pathlib import Path
+from watchdog.observers import Observer
+from watchdog.events import FileSystemEventHandler
 
 p = Path('C:\\Python Projects\\Files') #input the file directory where you want to organize like 'Path\\to\\directory'
 
@@ -70,3 +73,25 @@ def duplicateFile(directory):
 
 
 print(duplicateFile(p))
+
+## Feature: Implement automatic file organization using folder monitoring
+
+class fileHandler(FileSystemEventHandler):
+    def on_created(self, event):
+        if not event.is_directory:
+            logging.info(f"New File Detected: {event.src_path}")
+            classify_file(p)
+
+
+if __name__ == '__main__':
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+    event_handler = fileHandler()
+    observer = Observer()
+    observer.schedule(event_handler, p, recursive=True)
+    observer.start()
+    try:
+        while observer.is_alive():
+            observer.join(1)
+    finally:
+        observer.stop()
+        observer.join()
