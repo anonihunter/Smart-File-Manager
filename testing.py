@@ -1,7 +1,7 @@
+from pathlib import Path
 import shutil
 import hashlib
 import logging
-from pathlib import Path
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
@@ -50,48 +50,45 @@ def classify_file(directory): #fucntion for Docs Categorization same idea for an
                 Path(directory/extension_type[exten]).mkdir(parents=True, exist_ok=True)
                 logger.info(f'Directory Created: {directory/extension_type[exten]}')
     
-    return f"No of operations: {count}, File Transferred"   
-
-## hashing the file
-
-def hashFile(filepath):
-    with open(filepath, 'rb') as file:
-        digest = hashlib.file_digest(file, 'sha256')
-        logger.info(f'File, {filepath.name} is hashed')
-
-    return digest.hexdigest()
-
-## Finding Duplicate Files
-
-def duplicateFile(directory):
-
-    index = 0
-
-    file_hash = {}
-    duplicate = []
-    system_folder = ['Duplicate']
-
-    for file in directory.iterdir():
-        if file.is_dir() and file.name in system_folder:
-            continue
-        for items in file.iterdir():
-            if Path(directory/'Duplicate').exists():
-                if (hashFile(items) in file_hash and 'Copy' in items.name):
-                    shutil.move(items, directory/'Duplicate')
-                    duplicate.append(items)
-                    index += 1
-                    logger.info(f'Duplicate File {items} Found & moved to {directory/'Duplicate'}')
-            else:
-                Path(directory/'Duplicate').mkdir(parents=True, exist_ok=True)            
-                file_hash[hashFile(items)] = items.name
-                logger.info(f'Folder for Duplicate File Created')
-
-    return f"No of Duplicates Found {index}, and Tranferred"
+    return f"No of operations: {count}, File Transferred"            
+        
+# print(classify_file(p))
 
 
-print(duplicateFile(p))
+# def hashFile(filepath):
+#     with open(filepath, 'rb') as file:
+#         digest = hashlib.file_digest(file, 'sha256')
+#         logger.info(f'File, {filepath.name} is hashed')
 
-## Feature: Implement automatic file organization using folder monitoring
+#     return digest.hexdigest()
+
+# def duplicateFile(directory):
+
+#     index = 0
+
+#     file_hash = {}
+#     duplicate = []
+#     system_folder = ['Duplicate']
+
+#     for file in directory.iterdir():
+#         if file.is_dir() and file.name in system_folder:
+#             continue
+#         for items in file.iterdir():
+#             if Path(directory/'Duplicate').exists():
+#                 if (hashFile(items) in file_hash and 'Copy' in items.name):
+#                     shutil.move(items, directory/'Duplicate')
+#                     duplicate.append(items)
+#                     index += 1
+#                     logger.info(f'Duplicate File {items} Found & moved to {directory/'Duplicate'}')
+#             else:
+#                 Path(directory/'Duplicate').mkdir(parents=True, exist_ok=True)            
+#                 file_hash[hashFile(items)] = items.name
+#                 logger.info(f'Folder for Duplicate File Created')
+
+#     return f"No of Duplicates Found {index}, and Tranferred"
+
+
+# print(duplicateFile(p))
 
 class fileHandler(FileSystemEventHandler):
     def on_created(self, event):
