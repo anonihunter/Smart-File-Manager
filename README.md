@@ -1,6 +1,6 @@
 # Smart File Organizer
 
-A Python project that automatically organizes files into categorized folders, detects duplicate files, and monitors folders in real time.
+A Python project that automatically organizes files into categorized folders, detects duplicate files, monitors folders in real time, and maintains detailed activity logs.
 
 ## Features
 
@@ -9,15 +9,16 @@ A Python project that automatically organizes files into categorized folders, de
 - Automatically creates destination folders if they don't exist.
 - Detects duplicate files using file hashing.
 - Monitors a folder in real time and automatically organizes newly added files.
-- Built using Python's `pathlib`, `shutil`, `hashlib`, and `watchdog` modules.
+- Maintains detailed logs of file operations and application events.
+- Built using Python's `pathlib`, `shutil`, `hashlib`, `watchdog`, and `logging` modules.
 
 ## Project Structure
 
 - ✅ Phase 1: File Organization
 - ✅ Phase 2: Duplicate File Detection
 - ✅ Phase 3: Real-Time Folder Monitoring
-- ⏳ Phase 4: Logging
-- ⏳ Phase 5: Statistics
+- ✅ Phase 4: Activity Logging
+- ⏳ Phase 5: Statistics Dashboard
 - ⏳ Phase 6: Configuration File
 - ⏳ Phase 7: GUI
 
@@ -28,6 +29,7 @@ A Python project that automatically organizes files into categorized folders, de
 - shutil
 - hashlib
 - watchdog
+- logging
 
 ## How to Run
 
@@ -38,11 +40,11 @@ A Python project that automatically organizes files into categorized folders, de
 
 ## Future Improvements
 
-- Activity logging
-- Project statistics dashboard
+- Statistics dashboard
 - Configuration file (JSON)
 - GUI interface
 - Undo last organization operation
+- Export activity reports
 
 ## Learning Outcomes
 
@@ -53,4 +55,5 @@ This project helped me practice:
 - File operations using `shutil`
 - Hashing for duplicate file detection
 - Real-time file system monitoring
+- Application logging using Python's `logging` module
 - Writing modular and maintainable Python code
