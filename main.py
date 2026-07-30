@@ -1,6 +1,7 @@
 import sys
 import logging
 from logger import logger
+from stats import print_report
 from organize import classify_file
 from duplicates import duplicateFile
 from watchdog.observers import Observer
@@ -18,7 +19,7 @@ class fileHandler(FileSystemEventHandler):
     def on_created(self, event):
         if not event.is_directory:
             logger.info(f"New File Detected: {event.src_path}")
-            classify_file(p)
+            classify_file(path)
 
 if __name__ == '__main__':
     event_handler = fileHandler()
@@ -31,3 +32,4 @@ if __name__ == '__main__':
     finally:
         observer.stop()
         observer.join()
+        print_report()
