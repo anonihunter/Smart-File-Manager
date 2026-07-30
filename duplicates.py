@@ -1,8 +1,9 @@
 import hashlib
 import shutil
-from logger import logger
-from pathlib import Path
 from stats import stats
+from pathlib import Path
+from config import config
+from logger import logger
 
 def hashFile(filepath):
     with open(filepath, 'rb') as file:
@@ -12,6 +13,8 @@ def hashFile(filepath):
     return digest.hexdigest()
 
 def duplicateFile(directory):
+
+    duplicate_mode = config["duplicates"]["mode"]
 
     index = 0
 
@@ -31,10 +34,18 @@ def duplicateFile(directory):
         for items in file.iterdir():
             file_hash_val = hashFile(items)
             if (file_hash_val in file_hash or 'Copy' in items.name):
-                shutil.move(items, duplicate_folder)
-                index += 1
-                stats["duplicate_files"] += 1
-                logger.info(f'Duplicate File {items.name} Found & moved to {directory/'Duplicate'}')
+                if duplicate_mode == "move":
+                    shutil.move(items, duplicate_folder)
+                    logger.info(f"Duplicate File {items.name} moved.")
+
+                elif duplicate_mode == "skip":
+                    logger.info(f"Duplicate File {items.name} skipped.")
+
+                elif duplicate_mode == "report":
+                    print(f"Duplicate Found : {items.name}")
+
+                    index += 1
+                    stats["duplicate_files"] += 1
             else:            
                 file_hash_val = items.name
 

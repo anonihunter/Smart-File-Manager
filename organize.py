@@ -1,7 +1,8 @@
 import shutil
+from stats import stats
 from pathlib import Path
 from logger import logger
-from stats import stats
+from config import config
 
 def classify_file(directory): #fucntion for Docs Categorization same idea for another folders and things it take input and directory where we have to arrange
 
@@ -9,19 +10,7 @@ def classify_file(directory): #fucntion for Docs Categorization same idea for an
 
     count = 0
 
-    extension_type = {'.pdf': 'Docs',
-                    '.txt': 'Docs',
-                    '.docx': 'Docs',
-                    '.bmp': 'Images',
-                    '.jpeg': 'Images',
-                    '.jpg': 'Images',
-                    '.png': 'Images',
-                    '.mp4': 'Videos',
-                    '.mkv': 'Videos',
-                    '.mp3': 'Audio',
-                    '.m4a': 'Audio',
-                    '.zip': 'Zip File'
-                      }
+    extension_type = config["extension_mapping"]
 
     directory = Path(directory)
     
@@ -31,7 +20,7 @@ def classify_file(directory): #fucntion for Docs Categorization same idea for an
             stats["files_scanned"] += 1
         for exten in keys_lst:
             if Path(directory/extension_type[exten]).exists():
-                if exten in file.name:
+                if file.suffix.lower() == exten:
                     shutil.move(file, directory/extension_type[exten])
                     stats["files_organized"] += 1
                     stats["category"][extension_type[exten]] += 1

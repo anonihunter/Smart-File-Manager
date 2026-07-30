@@ -1,0 +1,40 @@
+{
+    "default_directory": "C:/Python Projects/Files",
+
+    "extension_mapping": {
+        ".pdf": "Docs",
+        ".txt": "Docs",
+        ".docx": "Docs",
+
+        ".jpg": "Images",
+        ".jpeg": "Images",
+        ".png": "Images",
+        ".bmp": "Images",
+
+        ".mp4": "Videos",
+        ".mkv": "Videos",
+
+        ".mp3": "Audio",
+        ".m4a": "Audio",
+
+        ".zip": "Zip File"
+    },
+
+    "duplicates": {
+        "mode": "skip"
+    },
+
+    "logging": {
+        "enabled": true,
+        "level": "INFO",
+        "filename": "smart_file_manager.log"
+    },
+
+    "monitoring": {
+        "recursive": true
+    },
+
+    "statistics": {
+        "enabled": true
+    }
+}
